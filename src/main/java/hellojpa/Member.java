@@ -38,7 +38,13 @@ public class Member {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(Team team){
         this.team = team;
+        team.getMembers().add(this);
     }
+
+//    public void changeTeam(Team team) {
+//        this.team = team;
+//        team.getMembers().add(this); // 편하게 이렇게 넣어주자
+//    }
 }
