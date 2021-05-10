@@ -18,30 +18,26 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            Member findMember = em.find(Member.class, 1L);
 
-//            List<Member> result = em.createQuery("select m from Member as m", Member.class) // Member 객체를 대상으로 쿼리를 친다고 생각
-//                    .setFirstResult(1)
-//                    .setMaxResults(8) // 페이지 네이션할때 필요
-//                    .getResultList();
-//
-//            for (Member member : result){
-//                System.out.println("member.name = " + member.getName());
-//            }
+            // 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            // 비영속
             Member member = new Member();
-            member.setId(100L);
-            member.setName("HelloJPA");
-
-            System.out.println("=== BEFORE ===");
-            // 영속 (아직 DB에 저장은 안됨)
+            member.setUsername("member1");
+            member.setTeam(team);
             em.persist(member);
-//            // 회원 엔티티를 영속성 컨텍스트에서 분리, 준영속 상태
-//            em.detach(member);
-//            // 객체를 삭제한 상태(삭제)
-//            em.remove(member);
-            System.out.println("=== AFTER ===");
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
+            
+            for (Member m : members){
+                System.out.println("m.getUsername() = " + m.getUsername());
+            }
 
             tx.commit();
         } catch (Exception e){
