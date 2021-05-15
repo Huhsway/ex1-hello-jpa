@@ -10,7 +10,7 @@ public class Address {
 
     private String city;
     private String street;
-    @Column(name = "ZIPCODE")
+//    @Column(name = "ZIPCODE")
     private String zipcode;
 
     public Address(){
